@@ -57,7 +57,6 @@ int main(){
         if (l==0) l++;
         int res = func(r)-func(l-1);
 
-
         cout << res << "\n";
     }
     return 0;

@@ -20,11 +20,15 @@ int main(){
             // monta uma pq com o tempo economizado caso
             // mana seja gasta em cada uma das salas        
         }
-        for (int i=0; i<mana; i++){    
+        for (int i=0; i<mana; i++){     
             tempo -= timesaved.top();   
             timesaved.pop();
+            if (timesaved.empty()) break;
             //economiza o tempo de forma eficiente
         }
+        //if ( tempo > 0.5503 && tempo < 0.5505 )
+        //cout << n << " " << mana << " " << dano << "\n";
+        //else
         printf("%.4Lf\n", tempo);
     }
     return 0;
