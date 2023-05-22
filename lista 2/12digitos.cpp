@@ -6,7 +6,7 @@ using namespace std;
 long long int sum[10];
 
 long long int func(long long int r){
-    //if (tb[r]!=-1) return tb[r];
+    //if (tb[r]!=-1) return  tb[r];
     long long int low, cur, res=0, high, d=10;
     string str = to_string(r), strtemp;
     if (r>9){
@@ -16,6 +16,11 @@ long long int func(long long int r){
         cur = stoll(strtemp);
         res += low*45;
         res += sum[cur];
+
+        //cout << "low: " << low << endl;
+        //cout << "high: " << high << endl;
+        //cout << "cur: " << cur << endl;
+        //cout << "res: " << res << endl << endl;
 
         for (long long int i=(str.size()-2); i>0; i--){
             //cout << "(" << i << ") " << "BREAKPOINT!!\n";
@@ -30,6 +35,10 @@ long long int func(long long int r){
             res += sum[cur-1]*d;
 
             d = d*10;
+            //cout << "low: " << low << endl;
+            //cout << "high: " << high << endl;
+            //cout << "cur: " << cur << endl;
+            //cout << "res: " << res << endl << endl;
         }
         
         high = stoll( str.substr(1, (str.size()-1) ) );
@@ -37,6 +46,12 @@ long long int func(long long int r){
         cur = stoll(strtemp);
         res += (high+1)*cur;
         res += sum[cur-1]*d;
+
+        //cout << "low: " << low << endl;
+        //cout << "high: " << high << endl;
+        //cout << "cur: " << cur << endl;
+        //cout << "res: " << res << endl << endl;
+
         } else res += sum[r];
     //tb[r] = res;
     return res;
@@ -57,14 +72,14 @@ int main(){
     sum[9] = 45;
 
     long long int l, r, res;
-    while (cin){
+    while (cin >> l >> r){
         
-        cin  >> l >> r;
+        
         
         if (l==0) l++;
         res = func(r)-func(l-1);
         
-        
+        res = res % 1000000007;
         cout << res << "\n";
     }
     return 0;

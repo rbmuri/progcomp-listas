@@ -2,10 +2,12 @@
 
 using namespace std;
 
+int func()
+
 int main(){
     int n, k, past, res, count, temp;
     cin >> n >> k;
-    while (n||k) {
+    while (n) {
         res=0, count=0;
         for (int i=0; i<n; i++){
             cin >> temp;
