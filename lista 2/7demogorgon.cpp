@@ -16,7 +16,7 @@ int dem(int hp, int n){
 
 int main(){
     int tmax, n, wmax, hp, out, temp;
-    
+      
     
     while (cin >> n){
         cin >> hp;
