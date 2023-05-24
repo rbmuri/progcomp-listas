@@ -8,46 +8,60 @@
  
 //problema da mochila
 
+const int INF = 0x3f3f3f3f;
+
 using namespace std;
 
-int dem(int hp, int n){
-    if ()  
-}
+
 
 int main(){
     int tmax, n, wmax, hp, out, temp;
       
     
-    while (cin >> n){
-        cin >> hp;
-        int val[n], w[n];
+    while (cin >> n >> hp){
+        int dano[n], w[n];
         out = -1, wmax=0;
 
         for (int ni=0; ni<n; ni++){
-            cin >> val[ni] >> w[ni];
+            cin >> dano[ni] >> w[ni];
         }      
-        cout << "break!\n";
-        int tb[n+1][1000001];
-        cout << "break!\n";
-        for (int i=0; i<n+1; i++){
-            for (int j=0; j<1000001; j++){
-                if (i==0 || j==0) tb[i][j] = 0;
-                else if (w[i-1] <= j) {
-                    tb[i][j] = max(
-                        tb[i-1][j], tb[i-1][j-w[i-1]]+val[i-1]
+        //cout << "break!\n";
+        int tb[n+1][hp+1];
+        //cout << "break!\n";
+        for (int i=0; i<=n; i++){ 
+            for (int j=0; j<=hp; j++){
+                if ( i==0 || j==0) {tb[i][j] = INF; continue;}
+                
+                
+                    
+                    int var = j-dano[i-1]; 
+                    if (var<0) var = 0;
+                    tb[i][j] = min(
+                        tb[i-1][j], 
+                        tb[i-1][var]+w[i-1]
                     );
-                } else tb[i][j] = tb[i-1][j];
+                    if (dano[i-1]>=j && w[i-1]<tb[i][j])
+                        tb[i][j] = w[i-1];
+                
             }
         }
-        cout << "break!!\n";
-        for (int i=1; i<1000001; i++){
-            //cout << "break! " << tb[n][i] << endl;
-            if (tb[n][i] >= hp) {
-                out = i;
-                break;
-            }
+        //cout << "break!!\n";
+        
+        /*
+    cout << endl;
+    for (int i=0;i<=n; i++){
+        for (int j=0;j<=hp; j++){
+            if (tb[i][j]!=INF)
+            cout << tb[i][j] << " ";
+            else
+            cout << "INF ";
         }
-        cout << out << "\n";
+            
+        cout << endl;
+    }
+    */
+    if (tb[n][hp]==INF) tb[n][hp] = -1;
+        cout << tb[n][hp] << "\n";
     }
 
     return 0;

@@ -1,4 +1,4 @@
-#include <bits/stdc++.h>
+o
  
 //???
 int vet[1000];
