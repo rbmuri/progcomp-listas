@@ -20,6 +20,10 @@ class Point {
         return (x == other.x && y == other.y);
     }
 
+    bool operator!=(Point other) {
+        return (x != other.x || y != other.y);
+    }
+
     void print(){
         cout << x << " " << y << "\n";
     }
@@ -85,6 +89,12 @@ class Pointvector{
         vec[n] = temp;
         size--;
     }
+    void remove(Pointvector pts){
+        for (int i = 0; i<pts.size; i++){
+            for (int j = 0; j<size; j++){
+                if (pts.vec[i]==vec[j]) pop(j);
+            }
+        }
     }
 };
 
@@ -112,9 +122,13 @@ Point comparison(Point a, Point b, Point c){
         return b;
     }
     else {
+        int bdist = sqdist(a, b);
+        int cdist = sqdist(a, c);
+        if ( bdist == 0 ) return c;
+        if ( cdist == 0 ) return b;
         if ( sqdist(a, b) > sqdist(a, c) ) 
-                return b;            
-        else return c;
+                return c;            
+        else return b;
     }
 }
 
@@ -140,7 +154,9 @@ Pointvector jarvis(Pointvector pts){
     int i = 1;
     while (1){
             hull.push(pts[i-1]);
-        for (int j=0; j<pts.size; j++){
+
+        for (int j=0; j<pts.size; j++){ // funcao só esta pegando os pontos externos sem pegar pontos entre dois
+             
             hull[i] = comparison(hull[i-1], hull[i], pts[j]);
         }
         if (hull[0]==hull[i]) {
@@ -153,24 +169,27 @@ Pointvector jarvis(Pointvector pts){
 }
 
 int main(){
-    while (true){
+    int n;
+    cin >> n;
+    while (n){
+        int layers=0;
         Pointvector pts;
-        int max=0;
-        for (int i = 0; i < 5; i++){
-            Point p;
+        Point p;
+        for (int i = 0; i<n; i++){
             cin >> p.x >> p.y;
             pts.push(p);
         }
-        if (pts[0].x==pts[0].y && pts[1].x==pts[1].x && pts[0].x==pts[1].x )
-            break;
-
-        for (int i = 0; i < 5; i++){
-            pts.swap(i, 4);
-            Point temp = pts[4];
-            pts.pop();
-            
-
+        while (pts.size != 0){
+            Pointvector hull = jarvis(pts);
+            pts.remove(hull);
+            layers++;
+            cout << "layer:" << layers << endl;
+            pts.print();
         }
+        if (layers%2 == 1) cout << "Take this onion to the lab!\n";
+        else cout << "Do not take this onion to the lab!\n";
+        cout << "layers: " << layers << endl;
+        cin >>n;
     }
     return 0;
 }
