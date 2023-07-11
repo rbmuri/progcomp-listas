@@ -19,14 +19,28 @@ int main(){
             cin >> x[i] >> y[i];
         }
         for (ll i=0; i<t; i++){
-            for (ll j=i+1; j<t; j++){
-                for (ll k=j+1; k<t; k++){
-                    ll a = sqrdist(x[i]-x[j], y[i]-y[j]);
-                    ll b = sqrdist(x[j]-x[k], y[j]-y[k]);
-                    ll c = sqrdist(x[k]-x[i], y[k]-y[i]);
-                    if ( a==b || b==c || c==a ) num++;                         
+            vector<ll> v;
+            for (ll j=0; j<t; j++){
+                ll a = sqrdist(x[i]-x[j], y[i]-y[j]);
+                v.push_back(a);                         
+            }
+            sort(v.begin(), v.end());
+            ll temp = v[0];
+            ll var=0;
+            //cout << "vector[0]: " << v[0] << endl;
+            for (ll j=1; j<t; j++){
+                //cout << "vector[" << j << "]: " << v[j] << endl;
+                if (temp==v[j]){
+                    var++;
+                }
+                else {
+                    num = num+ (var+1)*(var)/2;
+                    var = 0;
+                    temp = v[j];
+                    //cout << "num: " << num << endl;
                 }
             }
+            num = num+ (var+1)*(var)/2;
         }
         cout << num << endl;
         cin >> t;

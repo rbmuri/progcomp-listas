@@ -126,9 +126,9 @@ Point comparison(Point a, Point b, Point c){
         int cdist = sqdist(a, c);
         if ( bdist == 0 ) return c;
         if ( cdist == 0 ) return b;
-        if ( sqdist(a, b) > sqdist(a, c) ) 
-                return c;            
-        else return b;
+        if ( sqdist(a, b) < sqdist(a, c) ) 
+                return b;            
+        else return c;
     }
 }
 
@@ -158,6 +158,7 @@ Pointvector jarvis(Pointvector pts){
         for (int j=0; j<pts.size; j++){ // funcao só esta pegando os pontos externos sem pegar pontos entre dois
              
             hull[i] = comparison(hull[i-1], hull[i], pts[j]);
+            //cout << "hull[" << i << "]: " << hull[i].x << " " << hull[i].y << endl;
         }
         if (hull[0]==hull[i]) {
             hull.pop();
@@ -183,12 +184,12 @@ int main(){
             Pointvector hull = jarvis(pts);
             pts.remove(hull);
             layers++;
-            cout << "layer:" << layers << endl;
+            //cout << "layer:" << layers << endl;
             pts.print();
         }
         if (layers%2 == 1) cout << "Take this onion to the lab!\n";
         else cout << "Do not take this onion to the lab!\n";
-        cout << "layers: " << layers << endl;
+        //cout << "layers: " << layers << endl;
         cin >>n;
     }
     return 0;
